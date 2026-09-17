@@ -102,16 +102,18 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Robot teams will soon receive several goals at once, each in whatever form is at hand — a category name, a photo, a description.
-            Existing benchmarks study multi-agent, multi-modal, and multi-object goal navigation in <em>isolation</em>.
-            HM3D-M&sup3; places all three in one episode.
+            Rapid progress in AI agents and robotics makes it a matter of the near future that humans are served by a team of robots.
+            Such a team will receive several goals at once, each specified in whatever form is convenient for the human, such as a category name, a photo, or a spoken description.
+            Existing benchmarks study multi-agent, multi-modal, and multi-object goal navigation in <em>isolation</em>, and a benchmark that places all three in one episode is missing.
+            To fill this gap, we introduce HM3D-M&sup3;.
           </p>
           <p>
-            A team of <i>K</i> agents starts at distributed locations and must find an unordered set of <i>M</i> object goals, each a category, an image, or a description.
-            HM3D-M&sup3; provides 1,000 validation episodes over 3,926 goals from 379 categories, 100K training samples, and two team-level metrics: goal-level SR and makespan-normalized SPL.
-            We also contribute two baselines: <b>HiGA</b>, a trained hierarchical goal assigner over a frozen open-vocabulary policy, and <b>LaViRA-M&sup3;</b>, a training-free VLM team with shared mapping and shared progress.
-            Adapted methods reach 16&ndash;27% SR; ours reach 38&ndash;41%, with complementary failure modes.
-            LaViRA-M&sup3; also runs on a real three-robot team.
+            A team of <i>K</i> agents starts at distributed locations in a photorealistic indoor scene and searches for an unordered set of <i>M</i> object goals, each given as an open-vocabulary category, an instance image, or an instance description.
+            HM3D-M&sup3; provides 1,000 validation episodes over 3,926 goals from 379 open-vocabulary categories, 100K observation&ndash;assignment training samples, and two team-level metrics, goal-level SR and makespan-normalized SPL.
+            We further contribute two baselines.
+            <b>HiGA</b> is a trained hierarchical goal assigner on top of a frozen open-vocabulary navigation policy, and <b>LaViRA-M&sup3;</b> is a training-free team of VLM agents with shared mapping and progress analysis.
+            Adapted multi-robot and zero-shot methods reach 16&ndash;27% SR, while our baselines reach 38&ndash;41% with complementary strengths and distinct failure modes.
+            Furthermore, we deploy LaViRA-M&sup3; on a heterogeneous three-robot team.
           </p>
         </div>
       </div>
