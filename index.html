@@ -86,9 +86,9 @@
     <div class="hero-body">
       <img id="teaser" height="100%" src="./static/images/teaser.jpg">
       <h2 class="subtitle has-text-centered">
-        In <span class="dnerf">HM3D-M&sup3;</span>, a team of <i>K</i> agents searches a
-        photorealistic indoor scene for an unordered set of <i>M</i> goals — each a category
-        (&#127991;&#65039;), a description (&#128289;), or an image (&#128248;) — all in one episode.
+        In <span class="dnerf">HM3D-M&sup3;</span>, a team of agents searches a photorealistic scene
+        for an unordered set of goals given as a category, an instance image, or an instance description.
+        The benchmark provides 1,000 validation episodes, 3,926 goals, 379 categories, and 100K training samples.
       </h2>
     </div>
   </div>
@@ -160,15 +160,11 @@
       <div class="column">
         <h2 class="title is-3">Multi-Agent, Multi-Modal, and Multi-Object</h2>
         <div class="content has-text-justified">
-          <b>Multi-agent</b>: <i>K</i> &isin; {2, 3, 4} agents start at distributed, jointly reachable locations and share a map; a goal is found once any agent declares it within 1&nbsp;m of the instance.
-          <b>Multi-object</b>: <i>M</i> &isin; {3, 4, 5} unordered goals per episode, all known upfront.
-          <b>Multi-modal</b>: each goal is a category (ON), an instance image (IIN), or an instance description (TN) — IIN / TN point to one specific instance, ON accepts any instance of the category.
+          A team of <i>K</i> &isin; {2, 3, 4} agents shares a map and searches for <i>M</i> &isin; {3, 4, 5} unordered goals, each given as a category (ON), an instance image (IIN), or an instance description (TN); a goal is found once any agent declares it within 1&nbsp;m of the instance.
         </div>
         <img src="./static/images/dataset_view.jpg" alt="Dataset statistics"/>
         <div class="content has-text-justified">
-          <b>Benchmark statistics</b>: 1,000 validation episodes on 36 held-out scenes, with 3,926 goals from 379 categories (1,299 ON / 1,313 TN / 1,314 IIN).
-          (a) Episodes per (<i>K</i>, <i>M</i>) cell. (b) Goals per modality for each <i>M</i>. (c) Goal spread vs. the shortest team tour <i>d*</i> (r&nbsp;=&nbsp;0.71). (d) Same-category instances sharing the floor with each IIN / TN goal.
-          100K training samples on disjoint scenes.
+          <b>Benchmark statistics</b>: 1,000 validation episodes on 36 held-out scenes, with 3,926 goals from 379 categories (1,299 ON / 1,313 TN / 1,314 IIN), and 100K training samples on disjoint scenes.
         </div>
       </div>
     </div>
@@ -181,14 +177,12 @@
       <div class="column">
         <h2 class="title is-3">Baselines</h2>
         <div class="content has-text-justified">
-          Two baselines, two paradigms:
-          1) <b>HiGA</b> (<b>trained</b>) — a transformer over agent, goal, and map tokens assigns goals to agents; each agent then navigates with a frozen open-vocabulary policy.
-          2) <b>LaViRA-M&sup3;</b> (<b>training-free</b>) — each agent runs a language–vision–robot action agent; the team shares a top-down map, a goal board, and natural-language progress analysis. No goal is ever explicitly assigned.
+          Two baselines, two paradigms: <b>HiGA</b> (<b>trained</b>) assigns goals to agents with a transformer over agent, goal, and map tokens, on top of a frozen open-vocabulary policy; <b>LaViRA-M&sup3;</b> (<b>training-free</b>) runs a team of language–vision–robot VLM agents that share a top-down map, a goal board, and progress analysis.
         </div>
         <img src="./static/images/pipeline-higa.jpg" alt="HiGA pipeline" style="display:block;margin-left:0;margin-right:auto"/>
         <div class="content has-text-centered"><b>HiGA</b>, trained. A transformer over agent, goal, and map tokens assigns goals to agents; a frozen open-vocabulary policy navigates. Flames mark trained modules, snowflakes frozen ones.</div>
         <img src="./static/images/pipeline-lavira.jpg" alt="LaViRA-M3 pipeline"/>
-        <div class="content has-text-centered"><b>LaViRA-M&sup3;</b>, training-free. Each agent runs a language–vision–robot action agent; the team shares a top-down map, a goal board, and progress analysis. No goal is ever explicitly assigned.</div>
+        <div class="content has-text-centered"><b>LaViRA-M&sup3;</b>, training-free. The team shares a top-down map, a goal board, and progress analysis; no goal is ever explicitly assigned.</div>
       </div>
     </div>
   </div>
@@ -216,7 +210,7 @@
           </tbody>
         </table>
         <div class="content has-text-justified">
-          Adapted methods find 16&ndash;27% of goals; our baselines reach 38&ndash;41%, with complementary strengths: HiGA leads on category goals (53.0% ON) but is weak on image goals (18.8% IIN) and least efficient (7.1% SPL); LaViRA-M&sup3; leads on instance goals (40.9% TN, 41.4% IIN) and efficiency (20.3% SPL). Neither paradigm dominates.
+          Adapted methods find 16&ndash;27% of goals; ours reach 38&ndash;41%. HiGA leads on category goals, LaViRA-M&sup3; on instance goals and efficiency — neither paradigm dominates.
         </div>
       </div>
     </div>
@@ -227,16 +221,15 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column">
-        <h2 class="title is-3">Qualitative and failure analysis</h2>
+        <h2 class="title is-3">Qualitative and Failure Analysis</h2>
         <img src="./static/images/vis_fail.jpg" alt="Episode visualization and failure attribution"/>
         <div class="content has-text-centered">
-          Left: a <i>K</i>&nbsp;=&nbsp;4, <i>M</i>&nbsp;=&nbsp;3 LaViRA-M&sup3; episode, one goal per modality, agents in different colors. Right: where missed goals go, as a fraction of all goals — (a) LaViRA-M&sup3;, (b) HiGA.
+          Left: a <i>K</i>&nbsp;=&nbsp;4, <i>M</i>&nbsp;=&nbsp;3 LaViRA-M&sup3; episode. Right: where missed goals go — (a) LaViRA-M&sup3;, (b) HiGA.
         </div>
         <div class="content has-text-justified">
-          <b>Failure attribution</b>: every missed goal gets one cause, and the two baselines fail in orthogonal ways.
-          LaViRA-M&sup3; misses 59.0% of goals, mostly at claim time: 41.8% are declared from over 1&nbsp;m away (pose miss), 8.9% fail its own verification, and only 8.3% are never claimed.
-          HiGA misses 62.1%, mostly in perception: 25.7% stop away from the right instance after detection, 11.9% (all image goals) fail keypoint matching, and 16.4% pass within 3&nbsp;m undetected.
-          The two profiles are complementary.
+          <b>Failure attribution</b>: LaViRA-M&sup3; misses 59.0% of goals, mostly at claim time (41.8% pose miss); HiGA misses 62.1%, mostly in perception (25.7% failed approach, 16.4% undetected nearby).
+          The two failure profiles are complementary.
+        </div>
         </div>
       </div>
     </div>
@@ -249,13 +242,12 @@
       <div class="column">
         <h2 class="title is-3">Real-World Deployment</h2>
         <div class="content has-text-justified">
-          We deploy LaViRA-M&sup3; on three heterogeneous robots in an office: an Agilex Cobot Magic, a Unitree Go1, and a Unitree Go2.
-          Each carries an RGB-D camera, a Livox Mid-360 LiDAR, and an onboard computer (RTX 4090 or Jetson Orin NX) running its own LaViRA agent with a local Qwen3.8-27B — 4-bit GGUF, no cloud API.
-          The robots exchange the shared map as voxel records over Wi-Fi, plus the goal board and progress analysis — the same channels as in simulation.
+          We deploy LaViRA-M&sup3; on three heterogeneous robots in an office — an Agilex Cobot Magic, a Unitree Go1, and a Unitree Go2 — each running its own LaViRA agent onboard with a local Qwen3.8-27B (4-bit GGUF, no cloud API).
+          The robots exchange the shared map as voxel records over Wi-Fi, along with the goal board and progress analysis, through the same channels as in simulation.
         </div>
         <img src="./static/images/real_world.jpg" alt="Real-world deployment: three platforms, a three-goal run, and the shared map over time"/>
         <div class="content has-text-justified">
-          In the shown run — three goals at once: an image of a yellow suitcase, the category "printer", and the description "green chair besides the coffee bar" — the robots spread out, each claims the goal it meets, and a found goal leaves the others' lists.
+          In the shown run, the team handles three goals at once — an image of a yellow suitcase, the category "printer", and the description "green chair besides the coffee bar" — and each robot claims the goal it meets.
           The shared map grows over time, colored by robot; multiply-mapped regions are pink.
         </div>
       </div>
