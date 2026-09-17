@@ -86,10 +86,9 @@
     <div class="hero-body">
       <img id="teaser" height="100%" src="./static/images/teaser.jpg">
       <h2 class="subtitle has-text-centered">
-        In <span class="dnerf">HM3D-M&sup3;</span>, a team of <i>K</i> agents starts at
-        distributed locations in a photorealistic indoor scene and must find an unordered set of
-        <i>M</i> object goals, each given as an open-vocabulary category name (&#127991;&#65039;),
-        an instance description (&#128289;), or an instance image (&#128248;) — all in one episode.
+        In <span class="dnerf">HM3D-M&sup3;</span>, a team of <i>K</i> agents searches a
+        photorealistic indoor scene for an unordered set of <i>M</i> goals — each a category
+        (&#127991;&#65039;), a description (&#128289;), or an image (&#128248;) — all in one episode.
       </h2>
     </div>
   </div>
@@ -103,18 +102,16 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Rapid progress in AI agents and robotics makes it a matter of the near future that humans are served by a team of robots.
-            Such a team will receive several goals at once, each specified in whatever form is convenient for the human, such as a category name, a photo, or a spoken description.
-            Existing benchmarks study multi-agent, multi-modal, and multi-object goal navigation in <em>isolation</em>, and a benchmark that places all three in one episode is missing.
-            To fill this gap, we introduce HM3D-M&sup3;.
+            Robot teams will soon receive several goals at once, each in whatever form is at hand — a category name, a photo, a description.
+            Existing benchmarks study multi-agent, multi-modal, and multi-object goal navigation in <em>isolation</em>.
+            HM3D-M&sup3; places all three in one episode.
           </p>
           <p>
-            A team of <i>K</i> agents starts at distributed locations in a photorealistic indoor scene and must find an unordered set of <i>M</i> object goals, each given as an open-vocabulary category, an instance image, or an instance description.
-            HM3D-M&sup3; provides 1,000 validation episodes over 3,926 goals from 379 open-vocabulary categories, 100K training samples, and two team-level metrics, goal-level SR and makespan-normalized SPL.
-            We further contribute two baselines.
-            <b>HiGA</b> is a trained hierarchical goal assigner on top of a frozen open-vocabulary navigation policy, and <b>LaViRA-M&sup3;</b> is a training-free team of VLM agents with shared mapping and shared progress.
-            Adapted multi-robot and zero-shot methods reach 16 to 27% SR, while our baselines reach 38 to 41% with complementary strengths and orthogonal failure modes.
-            Furthermore, we deploy LaViRA-M&sup3; on a heterogeneous three-robot team.
+            A team of <i>K</i> agents starts at distributed locations and must find an unordered set of <i>M</i> object goals, each a category, an image, or a description.
+            HM3D-M&sup3; provides 1,000 validation episodes over 3,926 goals from 379 categories, 100K training samples, and two team-level metrics: goal-level SR and makespan-normalized SPL.
+            We also contribute two baselines: <b>HiGA</b>, a trained hierarchical goal assigner over a frozen open-vocabulary policy, and <b>LaViRA-M&sup3;</b>, a training-free VLM team with shared mapping and shared progress.
+            Adapted methods reach 16&ndash;27% SR; ours reach 38&ndash;41%, with complementary failure modes.
+            LaViRA-M&sup3; also runs on a real three-robot team.
           </p>
         </div>
       </div>
@@ -161,14 +158,15 @@
       <div class="column">
         <h2 class="title is-3">Multi-Agent, Multi-Modal, and Multi-Object</h2>
         <div class="content has-text-justified">
-          <b>Multi-agent</b>: a team of <i>K</i> &isin; {2, 3, 4} agents starts at distributed, jointly reachable locations and shares a map; a goal counts as found as soon as any team member declares it within 1&nbsp;m of the instance.
-          <b>Multi-object</b>: each episode carries <i>M</i> &isin; {3, 4, 5} unordered goals, all known at the start.
-          <b>Multi-modal</b>: every goal is individually specified as an open-vocabulary category (ON), an instance image (IIN), or an instance-level textual description (TN) — IIN and TN point to a specific instance, while ON accepts any instance of the category.
+          <b>Multi-agent</b>: <i>K</i> &isin; {2, 3, 4} agents start at distributed, jointly reachable locations and share a map; a goal is found once any agent declares it within 1&nbsp;m of the instance.
+          <b>Multi-object</b>: <i>M</i> &isin; {3, 4, 5} unordered goals per episode, all known upfront.
+          <b>Multi-modal</b>: each goal is a category (ON), an instance image (IIN), or an instance description (TN) — IIN / TN point to one specific instance, ON accepts any instance of the category.
         </div>
         <img src="./static/images/dataset_view.jpg" alt="Dataset statistics"/>
         <div class="content has-text-justified">
-          <b>Benchmark statistics</b>: 1,000 validation episodes on 36 held-out scenes, with 3,926 goals from 379 open-vocabulary categories (1,299 ON / 1,313 TN / 1,314 IIN): episodes per (<i>K</i>, <i>M</i>) cell (a), goals per modality for each <i>M</i> (b), goal spread — the mean pairwise geodesic distance between goals — against the shortest team tour <i>d*</i>, correlated with r&nbsp;=&nbsp;0.71 (c), and the number of same-category instances sharing the floor with each IIN and TN goal (d).
-          100K training samples on disjoint scenes are provided for learned methods.
+          <b>Benchmark statistics</b>: 1,000 validation episodes on 36 held-out scenes, with 3,926 goals from 379 categories (1,299 ON / 1,313 TN / 1,314 IIN).
+          (a) Episodes per (<i>K</i>, <i>M</i>) cell. (b) Goals per modality for each <i>M</i>. (c) Goal spread vs. the shortest team tour <i>d*</i> (r&nbsp;=&nbsp;0.71). (d) Same-category instances sharing the floor with each IIN / TN goal.
+          100K training samples on disjoint scenes.
         </div>
       </div>
     </div>
@@ -181,14 +179,14 @@
       <div class="column">
         <h2 class="title is-3">Baselines</h2>
         <div class="content has-text-justified">
-          We contribute two baselines representing two paradigms:
-          1) <b>HiGA</b>, a <b>trained</b> hierarchical goal assigner — a transformer over agent, goal, and map tokens assigns goals to agents, and each agent executes its assignment with a frozen open-vocabulary navigation policy; and
-          2) <b>LaViRA-M&sup3;</b>, a <b>training-free</b> team of VLM agents in which every agent runs a language–vision–robot action agent and the team shares a top-down map, a goal board, and natural-language progress analysis — no goal is ever explicitly assigned.
+          Two baselines, two paradigms:
+          1) <b>HiGA</b> (<b>trained</b>) — a transformer over agent, goal, and map tokens assigns goals to agents; each agent then navigates with a frozen open-vocabulary policy.
+          2) <b>LaViRA-M&sup3;</b> (<b>training-free</b>) — each agent runs a language–vision–robot action agent; the team shares a top-down map, a goal board, and natural-language progress analysis. No goal is ever explicitly assigned.
         </div>
-        <img src="./static/images/pipeline-higa.jpg" alt="HiGA pipeline"/>
-        <div class="content has-text-centered"><b>HiGA</b>, trained. A transformer over agent, goal, and map tokens assigns goals to agents, and each agent executes its assignment with a frozen open-vocabulary navigation policy. Flames mark trained modules and snowflakes frozen ones.</div>
+        <img src="./static/images/pipeline-higa.jpg" alt="HiGA pipeline" style="display:block;margin-left:0;margin-right:auto"/>
+        <div class="content has-text-centered"><b>HiGA</b>, trained. A transformer over agent, goal, and map tokens assigns goals to agents; a frozen open-vocabulary policy navigates. Flames mark trained modules, snowflakes frozen ones.</div>
         <img src="./static/images/pipeline-lavira.jpg" alt="LaViRA-M3 pipeline"/>
-        <div class="content has-text-centered"><b>LaViRA-M&sup3;</b>, training-free. Every agent runs a language–vision–robot action agent, and the team shares a top-down map, a goal board, and natural-language progress analysis. No goal is ever explicitly assigned.</div>
+        <div class="content has-text-centered"><b>LaViRA-M&sup3;</b>, training-free. Each agent runs a language–vision–robot action agent; the team shares a top-down map, a goal board, and progress analysis. No goal is ever explicitly assigned.</div>
       </div>
     </div>
   </div>
@@ -216,7 +214,7 @@
           </tbody>
         </table>
         <div class="content has-text-justified">
-          Adapted methods find only 16&ndash;27% of the goals, while our two baselines reach 38&ndash;41% with complementary strengths: HiGA is the strongest on category goals (53.0% ON) but weak on image goals (18.8% IIN) and the least efficient (7.1% SPL), whereas LaViRA-M&sup3; is the strongest on instance goals (40.9% TN, 41.4% IIN) and the most efficient (20.3% SPL). Neither paradigm dominates.
+          Adapted methods find 16&ndash;27% of goals; our baselines reach 38&ndash;41%, with complementary strengths: HiGA leads on category goals (53.0% ON) but is weak on image goals (18.8% IIN) and least efficient (7.1% SPL); LaViRA-M&sup3; leads on instance goals (40.9% TN, 41.4% IIN) and efficiency (20.3% SPL). Neither paradigm dominates.
         </div>
       </div>
     </div>
@@ -230,12 +228,12 @@
         <h2 class="title is-3">Qualitative and failure analysis</h2>
         <img src="./static/images/vis_fail.jpg" alt="Episode visualization and failure attribution"/>
         <div class="content has-text-centered">
-          Left: a <i>K</i>&nbsp;=&nbsp;4, <i>M</i>&nbsp;=&nbsp;3 episode of LaViRA-M&sup3; with one goal per modality, agents in different colors. Right: where missed goals go, as a fraction of all goals, for (a) LaViRA-M&sup3; and (b) HiGA.
+          Left: a <i>K</i>&nbsp;=&nbsp;4, <i>M</i>&nbsp;=&nbsp;3 LaViRA-M&sup3; episode, one goal per modality, agents in different colors. Right: where missed goals go, as a fraction of all goals — (a) LaViRA-M&sup3;, (b) HiGA.
         </div>
         <div class="content has-text-justified">
-          <b>Failure attribution</b>: per-goal analysis attributes every missed goal to one cause, and the two baselines fail in orthogonal ways.
-          LaViRA-M&sup3; misses 59.0% of all goals, mostly at claim time — 41.8% are declared FOUND from more than 1&nbsp;m away (pose miss) and 8.9% are rejected by its own verification, while only 8.3% are never claimed.
-          HiGA misses 62.1%, mostly in perception — in 25.7% the detector fires but the approach does not end within 1&nbsp;m of the right instance, 11.9% (all image goals) fail keypoint confirmation, and 16.4% pass within 3&nbsp;m undetected.
+          <b>Failure attribution</b>: every missed goal gets one cause, and the two baselines fail in orthogonal ways.
+          LaViRA-M&sup3; misses 59.0% of goals, mostly at claim time: 41.8% are declared from over 1&nbsp;m away (pose miss), 8.9% fail its own verification, and only 8.3% are never claimed.
+          HiGA misses 62.1%, mostly in perception: 25.7% stop away from the right instance after detection, 11.9% (all image goals) fail keypoint matching, and 16.4% pass within 3&nbsp;m undetected.
           The two profiles are complementary.
         </div>
       </div>
@@ -249,14 +247,14 @@
       <div class="column">
         <h2 class="title is-3">Real-World Deployment</h2>
         <div class="content has-text-justified">
-          We deploy LaViRA-M&sup3; on a heterogeneous team of three robots in an office — an Agilex Cobot Magic wheeled platform, a Unitree Go1, and a Unitree Go2 quadruped.
-          Each robot carries an RGB-D camera, a Livox Mid-360 LiDAR for localization and mapping, and an onboard computer (an RTX 4090 on the Cobot Magic, a Jetson Orin NX on each quadruped) running its own LaViRA agent with a locally deployed Qwen3.8-27B in 4-bit GGUF quantization — no cloud API.
-          The robots exchange the shared map as voxel records over Wi-Fi, together with the goal board and their progress analysis, through the same channels as in simulation.
+          We deploy LaViRA-M&sup3; on three heterogeneous robots in an office: an Agilex Cobot Magic, a Unitree Go1, and a Unitree Go2.
+          Each carries an RGB-D camera, a Livox Mid-360 LiDAR, and an onboard computer (RTX 4090 or Jetson Orin NX) running its own LaViRA agent with a local Qwen3.8-27B — 4-bit GGUF, no cloud API.
+          The robots exchange the shared map as voxel records over Wi-Fi, plus the goal board and progress analysis — the same channels as in simulation.
         </div>
         <img src="./static/images/real_world.jpg" alt="Real-world deployment: three platforms, a three-goal run, and the shared map over time"/>
         <div class="content has-text-justified">
-          In the shown run, the team handles three goals at once — an image of a yellow suitcase, the category "printer", and the description "green chair besides the coffee bar" — the robots spread out through the office, each claims the goal it encounters, and a goal found by one robot is removed from the others' lists.
-          The shared map grows over time, colored by robot, with regions mapped by more than one robot in pink.
+          In the shown run — three goals at once: an image of a yellow suitcase, the category "printer", and the description "green chair besides the coffee bar" — the robots spread out, each claims the goal it meets, and a found goal leaves the others' lists.
+          The shared map grows over time, colored by robot; multiply-mapped regions are pink.
         </div>
       </div>
     </div>
