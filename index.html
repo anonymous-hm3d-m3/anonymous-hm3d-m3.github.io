@@ -242,14 +242,17 @@
       <div class="column">
         <h2 class="title is-3">Real-World Deployment</h2>
         <div class="content has-text-justified">
-          We deploy LaViRA-M&sup3; on three heterogeneous robots in an office — an Agilex Cobot Magic, a Unitree Go1, and a Unitree Go2 — each running its own LaViRA agent onboard with a local Qwen3.8-27B (4-bit GGUF, no cloud API).
+          We deploy LaViRA-M&sup3; on three heterogeneous robots in an office — an Agilex Cobot Magic, a Unitree Go1, and a Unitree Go2.
           The robots exchange the shared map as voxel records over Wi-Fi, along with the goal board and progress analysis, through the same channels as in simulation.
         </div>
-        <img src="./static/images/real_world.jpg" alt="Real-world deployment: three platforms, a three-goal run, and the shared map over time"/>
-        <div class="content has-text-justified">
-          In the shown run, the team handles three goals at once — an image of a yellow suitcase, the category "printer", and the description "green chair besides the coffee bar" — and each robot claims the goal it meets.
-          The shared map grows over time, colored by robot; multiply-mapped regions are pink.
-        </div>
+        <video controls preload="none" playsinline poster="./static/images/real-world-demo1-cover.jpg" style="width:100%">
+          <source src="./static/videos/real-world-demo1.mp4" type="video/mp4"/>
+        </video>
+        <div class="content has-text-centered">Demo 1</div>
+        <video controls preload="none" playsinline poster="./static/images/real-world-demo2-cover.jpg" style="width:100%">
+          <source src="./static/videos/real-world-demo2.mp4" type="video/mp4"/>
+        </video>
+        <div class="content has-text-centered">Demo 2</div>
       </div>
     </div>
   </div>
