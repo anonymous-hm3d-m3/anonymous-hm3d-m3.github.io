@@ -12,11 +12,6 @@
         rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
@@ -30,8 +25,6 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 </head>
 <body>
@@ -64,13 +57,33 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="#"
+                <a href="https://github.com/anonymous-hm3d-m3/HM3D-M3"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Code (coming real soon)</span>
-                  </a>
+                  <span>Code</span>
+                </a>
+              </span>
+              <!-- Data Link (val1000 + mini100 episodes, IIN goal images). -->
+              <span class="link-block">
+                <a href="https://github.com/anonymous-hm3d-m3/HM3D-M3/releases/tag/v1.0.0"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-download"></i>
+                  </span>
+                  <span>Data</span>
+                </a>
+              </span>
+              <!-- Dataset Link (train split, IIN goal images, HiGA teacher samples). -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/anonymous-hm3d-m3/HM3D-M3"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>Dataset</span>
+                </a>
               </span>
             </div>
 
@@ -119,6 +132,7 @@
       </div>
     </div>
     <!--/ Abstract. -->
+  </div>
 </section>
 
 <section class="section">
@@ -229,7 +243,6 @@
         <div class="content has-text-justified">
           <b>Failure attribution</b>: LaViRA-M&sup3; misses 59.0% of goals, mostly at claim time (41.8% pose miss); HiGA misses 62.1%, mostly in perception (25.7% failed approach, 16.4% undetected nearby).
           The two failure profiles are complementary.
-        </div>
         </div>
       </div>
     </div>

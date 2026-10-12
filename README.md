@@ -3,3 +3,7 @@
 Project page for "HM3D-M3: A Benchmark for Multi-Agent, Multi-Modal, Multi-Object Goal Navigation" (anonymous submission).
 
 Website template adapted from [Nerfies](https://github.com/nerfies/nerfies.github.io), licensed under [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).
+
+- Code: https://github.com/anonymous-hm3d-m3/HM3D-M3
+- Data (val1000 + mini100 episodes, IIN goal images): https://github.com/anonymous-hm3d-m3/HM3D-M3/releases/tag/v1.0.0
+- Dataset (train split, IIN goal images, HiGA teacher samples): https://huggingface.co/datasets/anonymous-hm3d-m3/HM3D-M3
